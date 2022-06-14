@@ -28,11 +28,9 @@ class Fox(
     }
 
     private fun scanSurroundings() {
-        println("Scan surroundings")
         if (prey == null){
             val closestRabbit = getClosestRabbit(x, y)
             if (closestRabbit != null && abs(x - closestRabbit.x) < 50 && abs(y - closestRabbit.y) < 50) {
-                println("Prey targeted")
                 prey = closestRabbit
             }
         }
@@ -40,7 +38,6 @@ class Fox(
 
     // TODO: correct border conditions (+ adapt eat condition)
     private fun hunt() {
-        println("Hunting")
         val dx = x - prey!!.x
         val newX = if (-25 < dx && dx < 25) x - dx else if (dx < -25) x + 25 else x - 25
         x = if (newX < 0) 0.0 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 5.0 else newX
@@ -53,20 +50,15 @@ class Fox(
     }
 
     private fun eat() {
-        println("Eating")
         eatRabbit(prey!!.id)
         prey = null
         hunger = 0
         ++fed
-        if (fed > 10) {
-            println("Give birth")
-            giveBirth(x, y)
-        }
+        if (fed > 10) giveBirth(x, y)
     }
 
     // TODO: correct border conditions
     private fun move() {
-        println("Moving")
         val newX = x + Random.nextDouble(-15.0, 15.0)
         x = if (newX < 0) 20.0 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 20.0 else newX
         val newY = y + Random.nextDouble(-15.0, 15.0)
@@ -75,7 +67,6 @@ class Fox(
     }
 
     private fun die() {
-        println("Dead")
         living = false
         sendDeath(id)
     }
