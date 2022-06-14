@@ -34,6 +34,7 @@ class FieldView: View("FieldView") {
 
     private fun refresh() {
         val rabbitList = moveController.getRabbitsPositions()
+        val foxList = moveController.getFoxesPositions()
         root.center.replaceWith(group {
             // add invisible dots in the corners to prevent the group from contracting
             // it is important to keep track of the cursor when it is in some area without dots
@@ -44,6 +45,9 @@ class FieldView: View("FieldView") {
 
             for ((x, y) in rabbitList) {
                 ellipse(x, y, 5, 10) { fill = Color.BROWN }
+            }
+            for ((x, y) in foxList) {
+                ellipse(x, y, 7, 15) { fill = Color.ORANGERED }
             }
         })
     }
