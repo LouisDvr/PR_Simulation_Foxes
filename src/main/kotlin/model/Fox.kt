@@ -4,10 +4,12 @@ import kotlinx.coroutines.delay
 import kotlin.math.abs
 import kotlin.random.Random
 
-class Fox(val id: Int, var x: Double, var y: Double,
-          val getClosestRabbit: (Double, Double) -> Rabbit,
-          val giveBirth: (Double, Double) -> Unit,
-          val sendDeath: (Int) -> Unit,
+class Fox(
+    val id: Int, var x: Double, var y: Double,
+    val getClosestRabbit: (Double, Double) -> Rabbit?,
+    val giveBirth: (Double, Double) -> Unit,
+    val sendDeath: (Int) -> Unit,
+    val eatRabbit: (Int) -> Unit,
 ) {
 
     private var living = true
@@ -29,7 +31,7 @@ class Fox(val id: Int, var x: Double, var y: Double,
         println("Scan surroundings")
         if (prey == null){
             val closestRabbit = getClosestRabbit(x, y)
-            if (abs(x - closestRabbit.x) < 50 && abs(y - closestRabbit.y) < 50) {
+            if (closestRabbit != null && abs(x - closestRabbit.x) < 50 && abs(y - closestRabbit.y) < 50) {
                 println("Prey targeted")
                 prey = closestRabbit
             }
@@ -52,7 +54,7 @@ class Fox(val id: Int, var x: Double, var y: Double,
 
     private fun eat() {
         println("Eating")
-        // TODO: kill prey
+        eatRabbit(prey!!.id)
         prey = null
         hunger = 0
         ++fed

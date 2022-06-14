@@ -79,17 +79,25 @@ class MoveController: Controller() {
     }
 
     private fun rabbitBirth(x: Double, y: Double) {
-        val rabbit = Rabbit(rabbitCounter, x, y, fun (x: Double, y: Double) {rabbitBirth(x, y)})
+        val rabbit = Rabbit(rabbitCounter, x, y,
+            fun (x: Double, y: Double) {rabbitBirth(x, y)},
+        )
         ++rabbitCounter
         rabbitMap[rabbit.id] = rabbit
         babyRabbits.addLast(rabbit)
     }
 
+    private fun eatRabbit(id: Int) {
+        rabbitMap[id]!!.die()
+        rabbitMap.remove(id)
+    }
+
     private fun foxBirth(x: Double, y: Double) {
         val fox = Fox(foxCounter, x, y,
-            fun (x: Double, y: Double): Rabbit {return getClosestRabbit(x, y)},
+            fun (x: Double, y: Double): Rabbit? {return getClosestRabbit(x, y)},
             fun (x: Double, y: Double) {foxBirth(x, y)},
             fun (id: Int) {foxDied(id)},
+            fun (id: Int) {eatRabbit(id)}
         )
         ++foxCounter
         foxMap[fox.id] = fox
@@ -97,9 +105,10 @@ class MoveController: Controller() {
     }
 
     // TODO: return closest rabbit
-    private fun getClosestRabbit(x: Double, y: Double): Rabbit {
+    private fun getClosestRabbit(x: Double, y: Double): Rabbit? {
+        if (rabbitMap.isEmpty()) return null
         val id = Random.nextInt(0, rabbitMap.keys.size)
-        return rabbitMap[id]!!
+        return rabbitMap[rabbitMap.keys.toList()[id]]!!
     }
 
     private fun foxDied(id: Int) {
