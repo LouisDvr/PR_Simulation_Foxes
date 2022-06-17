@@ -36,17 +36,16 @@ class Fox(
         }
     }
 
-    // TODO: correct border conditions (+ adapt eat condition)
     private fun hunt() {
         val dx = x - prey!!.x
         val newX = if (-25 < dx && dx < 25) x - dx else if (dx < -25) x + 25 else x - 25
-        x = if (newX < 0) 0.0 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 5.0 else newX
+        x = if (newX < 0) 4.0 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 4.0 else newX
 
         val dy = y - prey!!.y
         val newY = if (-25 < dy && dy < 25) y - dy else if (dy < -25) y + 25 else y - 25
-        y = if (newY < 0) 0.0 else if (newY > CANVAS_HEIGHT) CANVAS_HEIGHT - 10.0 else newY
+        y = if (newY < 0) 4.0 else if (newY > CANVAS_HEIGHT) CANVAS_HEIGHT - 4.0 else newY
 
-        if (dx == 0.0 && dy == 0.0) eat()
+        if (dx < 1.5 && dy < 1.5) eat() // if both are against the border of the canvas, there will be 1.5 non-nullable dist
     }
 
     private fun eat() {
@@ -57,12 +56,11 @@ class Fox(
         if (fed > 10) giveBirth(x, y)
     }
 
-    // TODO: correct border conditions
     private fun move() {
         val newX = x + Random.nextDouble(-15.0, 15.0)
-        x = if (newX < 0) 20.0 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 20.0 else newX
+        x = if (newX < 0) 4.0 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 4.0 else newX
         val newY = y + Random.nextDouble(-15.0, 15.0)
-        y = if (newY < 0) 10.0 else if (newY > CANVAS_HEIGHT) CANVAS_HEIGHT - 10.0 else newY
+        y = if (newY < 0) 4.0 else if (newY > CANVAS_HEIGHT) CANVAS_HEIGHT - 4.0 else newY
         ++hunger
     }
 

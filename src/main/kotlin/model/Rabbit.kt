@@ -27,9 +27,9 @@ class Rabbit(
     private fun move() {
         isMoving = true
         val newX = x + Random.nextDouble(-15.0, 15.0)
-        x = if (newX < 0) 0.0 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 5.0 else newX
+        x = if (newX < 0) 2.5 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 2.5 else newX
         val newY = y + Random.nextDouble(-15.0, 15.0)
-        y = if (newY < 0) 0.0 else if (newY > CANVAS_HEIGHT) CANVAS_HEIGHT - 10.0 else newY
+        y = if (newY < 0) 2.5 else if (newY > CANVAS_HEIGHT) CANVAS_HEIGHT - 2.5 else newY
     }
 
     private fun hide() {
