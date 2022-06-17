@@ -10,6 +10,8 @@ import model.Rabbit
 import model.events.MoveOrderEvent
 import model.events.RefreshEvent
 import tornadofx.Controller
+import kotlin.math.pow
+import kotlin.math.sqrt
 import kotlin.random.Random
 
 class MoveController: Controller() {
@@ -23,13 +25,14 @@ class MoveController: Controller() {
     private val babyFoxes = ArrayDeque<Fox>()
 
     init {
-        for (i in 0 until 1) {
+        // TODO: demo: use 20 rabbits and 3 foxes
+        for (i in 0 until 20) {
             rabbitBirth(
                 Random.nextDouble(0.0, CANVAS_WIDTH.toDouble()),
                 Random.nextDouble(0.0, CANVAS_HEIGHT.toDouble()),
             )
         }
-        for (i in 0 until 1) {
+        for (i in 0 until 3) {
             foxBirth(
                 Random.nextDouble(0.0, CANVAS_WIDTH.toDouble()),
                 Random.nextDouble(0.0, CANVAS_HEIGHT.toDouble()),
@@ -104,11 +107,20 @@ class MoveController: Controller() {
         babyFoxes.addLast(fox)
     }
 
-    // TODO: return closest rabbit
+    // TODO: return close moving rabbit: naive look at all rabbits and use Pythagoras's distance
     private fun getClosestRabbit(x: Double, y: Double): Rabbit? {
         if (rabbitMap.isEmpty()) return null
-        val id = Random.nextInt(0, rabbitMap.keys.size)
-        return rabbitMap[rabbitMap.keys.toList()[id]]!!
+
+        var closestRabbit = rabbitMap.values.elementAt(0)
+        var shortestDist = sqrt((x - closestRabbit.x).pow(2) + (y - closestRabbit.y).pow(2))
+        for (rabbit in rabbitMap.values) {
+            val dist = sqrt((x - rabbit.x).pow(2) + (y - rabbit.y).pow(2))
+            if (dist < shortestDist) {
+                closestRabbit = rabbit
+                shortestDist = dist
+            }
+        }
+        return closestRabbit
     }
 
     private fun foxDied(id: Int) {
