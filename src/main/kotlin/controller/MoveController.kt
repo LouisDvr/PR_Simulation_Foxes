@@ -25,14 +25,14 @@ class MoveController: Controller() {
     private val babyFoxes = ArrayDeque<Fox>()
 
     init {
-        // TODO: demo: use 20 rabbits and 3 foxes
-        for (i in 0 until 20) {
+        // Demo: use 20 rabbits and 3 foxes
+        for (i in 0 until 30) {
             rabbitBirth(
                 Random.nextDouble(0.0, CANVAS_WIDTH.toDouble()),
                 Random.nextDouble(0.0, CANVAS_HEIGHT.toDouble()),
             )
         }
-        for (i in 0 until 3) {
+        for (i in 0 until 4) {
             foxBirth(
                 Random.nextDouble(0.0, CANVAS_WIDTH.toDouble()),
                 Random.nextDouble(0.0, CANVAS_HEIGHT.toDouble()),
