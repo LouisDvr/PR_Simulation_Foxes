@@ -91,8 +91,9 @@ class MoveController: Controller() {
     }
 
     private fun eatRabbit(id: Int) {
-        rabbitMap[id]!!.die()
+        val rabbit = rabbitMap[id]
         rabbitMap.remove(id)
+        rabbit?.die()
     }
 
     private fun foxBirth(x: Double, y: Double) {
@@ -107,13 +108,14 @@ class MoveController: Controller() {
         babyFoxes.addLast(fox)
     }
 
-    // TODO: return close moving rabbit: naive look at all rabbits and use Pythagoras's distance
+    // TODO: enhance algorithm by looking only to close area
     private fun getClosestRabbit(x: Double, y: Double): Rabbit? {
         if (rabbitMap.isEmpty()) return null
 
         var closestRabbit = rabbitMap.values.elementAt(0)
         var shortestDist = sqrt((x - closestRabbit.x).pow(2) + (y - closestRabbit.y).pow(2))
         for (rabbit in rabbitMap.values) {
+            if (!rabbit.isMoving) continue
             val dist = sqrt((x - rabbit.x).pow(2) + (y - rabbit.y).pow(2))
             if (dist < shortestDist) {
                 closestRabbit = rabbit

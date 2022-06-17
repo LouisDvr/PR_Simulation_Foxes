@@ -10,6 +10,7 @@ class Rabbit(
 
     private var gestationCounter = 0
     private var living = true
+    var isMoving = false
 
     suspend fun live() {
         while (living) {
@@ -24,6 +25,7 @@ class Rabbit(
 
     // TODO: correct border conditions
     private fun move() {
+        isMoving = true
         val newX = x + Random.nextDouble(-15.0, 15.0)
         x = if (newX < 0) 0.0 else if (newX > CANVAS_WIDTH) CANVAS_WIDTH - 5.0 else newX
         val newY = y + Random.nextDouble(-15.0, 15.0)
@@ -31,6 +33,7 @@ class Rabbit(
     }
 
     private fun hide() {
+        isMoving = false
         if (gestationCounter > 10) {
             giveBirth(x, y)
             gestationCounter = 0
