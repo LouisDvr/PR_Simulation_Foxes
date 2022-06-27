@@ -23,7 +23,6 @@ class Rabbit(
         }
     }
 
-    // TODO: correct border conditions
     private fun move() {
         isMoving = true
         val newX = x + Random.nextDouble(-15.0, 15.0)
