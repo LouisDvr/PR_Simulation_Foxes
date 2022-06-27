@@ -53,7 +53,10 @@ class Fox(
         prey = null
         hunger = 0
         ++fed
-        if (fed > 10) giveBirth(x, y)
+        if (fed > 10) {
+            fed = 0
+            giveBirth(x, y)
+        }
     }
 
     private fun move() {
